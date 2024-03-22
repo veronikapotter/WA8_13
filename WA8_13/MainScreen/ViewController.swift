@@ -9,8 +9,16 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let mainScreen = MainScreenView()
+    
+    override func loadView() {
+        view = mainScreen
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "hello, world."
         // Do any additional setup after loading the view.
     }
 
