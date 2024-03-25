@@ -16,6 +16,10 @@ class ViewController: UIViewController {
     var handleAuth: AuthStateDidChangeListenerHandle?
     var currentUser:FirebaseAuth.User?
     let database = Firestore.firestore()
+    let notificationCenter = NotificationCenter.default
+    
+    let searchSheetController = SearchBottomSheetController()
+    var searchSheetNavController: UINavigationController!
     
     override func loadView() {
         view = mainScreen
@@ -30,8 +34,8 @@ class ViewController: UIViewController {
                 //MARK: not signed in...
                 self.currentUser = nil
                 self.mainScreen.labelText.text = "Please sign in to see the chats!"
-                self.mainScreen.floatingButtonAddContact.isEnabled = false
-                self.mainScreen.floatingButtonAddContact.isHidden = true
+                self.mainScreen.floatingButtonNewChat.isEnabled = false
+                self.mainScreen.floatingButtonNewChat.isHidden = true
                 
                 //MARK: Reset tableView...
                 self.chatsList.removeAll()
@@ -42,8 +46,8 @@ class ViewController: UIViewController {
                 //MARK: the user is signed in...
                 self.currentUser = user
                 self.mainScreen.labelText.text = "Welcome \(user?.displayName ?? "Anonymous")!"
-                self.mainScreen.floatingButtonAddContact.isEnabled = true
-                self.mainScreen.floatingButtonAddContact.isHidden = false
+                self.mainScreen.floatingButtonNewChat.isEnabled = true
+                self.mainScreen.floatingButtonNewChat.isHidden = false
                 self.setupRightBarButton(isLoggedin: true)
                 
                 // MARK: handle updating the table view of last messages to various users
@@ -73,8 +77,8 @@ class ViewController: UIViewController {
     func getChatDetails(chat: Chat) {
         // API request to users -> chats -> messages.
         /*let chatViewController = ChatViewController()
-        chatViewController.currentChat = chat
-        navigationController?.pushViewController(chatViewController, animated: <#T##Bool#>)*/
+         chatViewController.currentChat = chat
+         navigationController?.pushViewController(chatViewController, animated: <#T##Bool#>)*/
     }
     
     override func viewDidLoad() {
@@ -91,9 +95,46 @@ class ViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         //MARK: Put the floating button above all the views...
-        view.bringSubviewToFront(mainScreen.floatingButtonAddContact)
+        view.bringSubviewToFront(mainScreen.floatingButtonNewChat)
+        
+        mainScreen.floatingButtonNewChat.addTarget(self, action: #selector(onNewChatButtonTapped), for: .touchUpInside)
+        
+        observeNameSelected()
+        
     }
     
+    func observeNameSelected(){
+        // MARK: fix this
+//        notificationCenter.addObserver(
+//            self,
+//            selector: #selector(onNameSelected(notification:)),
+//            name: .nameSelected, object: nil)
+    }
+    @objc func onNameSelected(notification: Notification){
+        if let selectedName = notification.object{
+            // MARK: do something here idk what yet
+            //mainScreen.labelName.text = selectedName as! String
+        }
+    }
+    
+    @objc func onNewChatButtonTapped(){
+        setupSearchBottomSheet()
+        present(searchSheetNavController, animated: true)
+    }
+    
+    
+    func setupSearchBottomSheet(){
+        //MARK: setting up bottom search sheet...
+        searchSheetNavController = UINavigationController(rootViewController: searchSheetController)
+        
+        // MARK: setting up modal style...
+        searchSheetNavController.modalPresentationStyle = .pageSheet
+        
+        if let bottomSearchSheet = searchSheetNavController.sheetPresentationController{
+            bottomSearchSheet.detents = [.medium(), .large()]
+            bottomSearchSheet.prefersGrabberVisible = true
+        }
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

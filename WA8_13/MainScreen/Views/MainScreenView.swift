@@ -11,7 +11,7 @@ class MainScreenView: UIView {
     
     var profilePic: UIImageView!
     var labelText: UILabel!
-    var floatingButtonAddContact: UIButton!
+    var floatingButtonNewChat: UIButton!
     var tableViewChats: UITableView!
     
     override init(frame: CGRect) {
@@ -20,7 +20,7 @@ class MainScreenView: UIView {
         
         setupProfilePic()
         setupLabelText()
-        setupFloatingButtonAddContact()
+        setupFloatingButtonNewChat()
         setupTableViewChats()
         initConstraints()
     }
@@ -50,20 +50,20 @@ class MainScreenView: UIView {
         self.addSubview(tableViewChats)
     }
     
-    func setupFloatingButtonAddContact(){
-        floatingButtonAddContact = UIButton(type: .system)
-        floatingButtonAddContact.setTitle("", for: .normal)
-        floatingButtonAddContact.setImage(UIImage(systemName: "person.crop.circle.fill.badge.plus")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        floatingButtonAddContact.contentHorizontalAlignment = .fill
-        floatingButtonAddContact.contentVerticalAlignment = .fill
-        floatingButtonAddContact.imageView?.contentMode = .scaleAspectFit
-        floatingButtonAddContact.layer.cornerRadius = 16
-        floatingButtonAddContact.imageView?.layer.shadowOffset = .zero
-        floatingButtonAddContact.imageView?.layer.shadowRadius = 0.8
-        floatingButtonAddContact.imageView?.layer.shadowOpacity = 0.7
-        floatingButtonAddContact.imageView?.clipsToBounds = true
-        floatingButtonAddContact.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(floatingButtonAddContact)
+    func setupFloatingButtonNewChat(){
+        floatingButtonNewChat = UIButton(type: .system)
+        floatingButtonNewChat.setTitle("", for: .normal)
+        floatingButtonNewChat.setImage(UIImage(systemName: "person.crop.circle.fill.badge.plus")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        floatingButtonNewChat.contentHorizontalAlignment = .fill
+        floatingButtonNewChat.contentVerticalAlignment = .fill
+        floatingButtonNewChat.imageView?.contentMode = .scaleAspectFit
+        floatingButtonNewChat.layer.cornerRadius = 16
+        floatingButtonNewChat.imageView?.layer.shadowOffset = .zero
+        floatingButtonNewChat.imageView?.layer.shadowRadius = 0.8
+        floatingButtonNewChat.imageView?.layer.shadowOpacity = 0.7
+        floatingButtonNewChat.imageView?.clipsToBounds = true
+        floatingButtonNewChat.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(floatingButtonNewChat)
     }
     
     
@@ -84,10 +84,10 @@ class MainScreenView: UIView {
             tableViewChats.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             tableViewChats.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
-            floatingButtonAddContact.widthAnchor.constraint(equalToConstant: 48),
-            floatingButtonAddContact.heightAnchor.constraint(equalToConstant: 48),
-            floatingButtonAddContact.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            floatingButtonAddContact.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            floatingButtonNewChat.widthAnchor.constraint(equalToConstant: 48),
+            floatingButtonNewChat.heightAnchor.constraint(equalToConstant: 48),
+            floatingButtonNewChat.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            floatingButtonNewChat.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
         ])
     }

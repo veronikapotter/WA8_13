@@ -14,7 +14,8 @@ struct User: Codable {
     var email: String
     var chats: [Chat]
     
-    init(name: String, email: String, chats: [Chat]) {
+    init(id: String, name: String, email: String, chats: [Chat]) {
+        self.id = id
         self.name = name
         self.email = email
         self.chats = chats

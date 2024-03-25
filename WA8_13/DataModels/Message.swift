@@ -14,7 +14,8 @@ struct Message: Codable{
     var text: String
     var timestamp: Int
     
-    init(user: User, text: String, timestamp: Int) {
+    init(id: String, user: User, text: String, timestamp: Int) {
+        self.id = id
         self.user = user
         self.text = text
         self.timestamp = timestamp
