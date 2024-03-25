@@ -1,8 +1,22 @@
 //
 //  User.swift
-//  WA8_13
+//  WA8_fix
 //
-//  Created by Veronika Potter on 3/25/24.
+//  Created by Bayden Ibrahim on 3/25/24.
 //
 
 import Foundation
+import FirebaseFirestoreSwift
+
+struct User: Codable {
+    @DocumentID var id: String?
+    var name: String
+    var email: String
+    var chats: [Chat]
+    
+    init(name: String, email: String, chats: [Chat]) {
+        self.name = name
+        self.email = email
+        self.chats = chats
+    }
+}

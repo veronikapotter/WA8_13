@@ -1,8 +1,13 @@
 //
 //  Configs.swift
-//  WA8_13
+//  WA8_fix
 //
-//  Created by Veronika Potter on 3/25/24.
+//  Created by Bayden Ibrahim on 3/25/24.
 //
 
 import Foundation
+
+class Configs {
+    static let tableViewChatsID = "tableViewChatsID"
+    static let tableViewMessagesID = "tableViewMessagesID"
+}
