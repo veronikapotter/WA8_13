@@ -53,7 +53,7 @@ class MainScreenView: UIView {
     func setupFloatingButtonAddContact(){
         floatingButtonAddContact = UIButton(type: .system)
         floatingButtonAddContact.setTitle("", for: .normal)
-        floatingButtonAddContact.setImage(UIImage(systemName: "person.crop.circle.fill.badge.plus")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        floatingButtonAddContact.setImage(UIImage(systemName: "plus.circle")?.withRenderingMode(.alwaysOriginal), for: .normal)
         floatingButtonAddContact.contentHorizontalAlignment = .fill
         floatingButtonAddContact.contentVerticalAlignment = .fill
         floatingButtonAddContact.imageView?.contentMode = .scaleAspectFit

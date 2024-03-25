@@ -4,7 +4,7 @@
 //
 //  Created by Veronika Potter on 3/25/24.
 //
-/*
+
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
@@ -25,10 +25,13 @@ class ChatViewController: UIViewController {
         
         super.viewDidLoad()
         
+        chatScreen.buttonSend.addTarget(self, action: #selector(onButtonSendTapped), for: .touchUpInside)
+        
         // MARK: add observer for when the chat updates
-        // TODO: need to sort through current user. Need to set up tableview.
-        self.database.collection("chats")
-            .document((self.currentChat?.user.name)!)
+        self.database.collection("users")
+            .document((self.currentChat?.user.email)!)
+            .collection("chats")
+            .document((self.currentChat?.id)!)
             .collection("messages")
             .addSnapshotListener(includeMetadataChanges: false, listener: {querySnapshot, error in
                 if let documents = querySnapshot?.documents{
@@ -42,10 +45,12 @@ class ChatViewController: UIViewController {
                         }
                     }
                 self.messageList.sort(by: {$0.timestamp > $1.timestamp})
-                self.mainScreen.tableViewContacts.reloadData()
+                self.chatScreen.tableViewMessages.reloadData()
             }
         })
-
-        // Do any additional setup after loading the view.
     }
-}*/
+    
+    // MARK: handle sending messge
+    @objc func onButtonSendTapped(){
+    }
+}

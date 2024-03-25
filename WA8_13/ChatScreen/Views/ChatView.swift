@@ -4,7 +4,6 @@
 //
 //  Created by Veronika Potter on 3/25/24.
 //
-/*
 import UIKit
 
 class ChatView: UIView {
@@ -35,8 +34,7 @@ class ChatView: UIView {
     
     func setupButtonSend() {
         buttonSend = UIButton(type: .system)
-        buttonSend.image = UIImage(systemName: "rectangle.portrait.and.arrow.forward")
-        buttonSend.setTitle("Add Contact", for: .normal)
+        buttonSend.setImage(UIImage(systemName: "paperplane")?.withRenderingMode(.alwaysOriginal), for: .normal)
         buttonSend.translatesAutoresizingMaskIntoConstraints = false
         bottomSendMessageView.addSubview(buttonSend)
     }
@@ -69,7 +67,19 @@ class ChatView: UIView {
             tableViewMessages.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             tableViewMessages.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
+            bottomSendMessageView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor,constant: -8),
+            bottomSendMessageView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            bottomSendMessageView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            
+            buttonSend.bottomAnchor.constraint(equalTo: bottomSendMessageView.bottomAnchor, constant: -8),
+            buttonSend.leadingAnchor.constraint(equalTo: textMessage.trailingAnchor, constant: 4),
+            buttonSend.trailingAnchor.constraint(equalTo: bottomSendMessageView.trailingAnchor, constant: -4),
+            
+            textMessage.bottomAnchor.constraint(equalTo: bottomSendMessageView.topAnchor, constant: -8),
+            textMessage.leadingAnchor.constraint(equalTo: bottomSendMessageView.leadingAnchor, constant: 4),
+            textMessage.trailingAnchor.constraint(equalTo: buttonSend.leadingAnchor, constant: -4),
+            
         ])
     }
 
-}*/
+}
