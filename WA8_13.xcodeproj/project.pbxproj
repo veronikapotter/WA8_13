@@ -19,6 +19,19 @@
 		FD0A30C62BADBE2700144F8E /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FD0A30C52BADBE2700144F8E /* FirebaseFirestoreSwift */; };
 		FD0A30C82BADBE2700144F8E /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FD0A30C72BADBE2700144F8E /* FirebaseStorage */; };
 		FD483FF32BADC1FE00819925 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD483FF22BADC1FE00819925 /* MainScreenView.swift */; };
+		FD483FF52BB1B08D00819925 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD483FF42BB1B08D00819925 /* Chat.swift */; };
+		FD483FF82BB1B0A600819925 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD483FF72BB1B0A600819925 /* Message.swift */; };
+		FD483FFA2BB1B0B300819925 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD483FF92BB1B0B300819925 /* User.swift */; };
+		FD483FFC2BB1B0EA00819925 /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD483FFB2BB1B0EA00819925 /* Configs.swift */; };
+		FD483FFF2BB1B11300819925 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD483FFE2BB1B11300819925 /* RegisterView.swift */; };
+		FD4840012BB1B12500819925 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4840002BB1B12500819925 /* RegisterViewController.swift */; };
+		FD4840032BB1B13B00819925 /* RegisterFirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4840022BB1B13B00819925 /* RegisterFirebaseManager.swift */; };
+		FD4840052BB1B16E00819925 /* RightBarButtonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4840042BB1B16E00819925 /* RightBarButtonManager.swift */; };
+		FD4840072BB1B19200819925 /* ChatsTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4840062BB1B19200819925 /* ChatsTableViewManager.swift */; };
+		FD4840092BB1B1B200819925 /* ChatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4840082BB1B1B200819925 /* ChatsTableViewCell.swift */; };
+		FD4840102BB1B5DB00819925 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD48400F2BB1B5DB00819925 /* ChatView.swift */; };
+		FD4840122BB1B6E100819925 /* ChatTableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4840112BB1B6E100819925 /* ChatTableManager.swift */; };
+		FD4840142BB1B7D700819925 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4840132BB1B7D700819925 /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +45,19 @@
 		FD0A30B82BADBD7A00144F8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD0A30BE2BADBDFD00144F8E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FD483FF22BADC1FE00819925 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
+		FD483FF42BB1B08D00819925 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		FD483FF72BB1B0A600819925 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		FD483FF92BB1B0B300819925 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		FD483FFB2BB1B0EA00819925 /* Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
+		FD483FFE2BB1B11300819925 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		FD4840002BB1B12500819925 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		FD4840022BB1B13B00819925 /* RegisterFirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterFirebaseManager.swift; sourceTree = "<group>"; };
+		FD4840042BB1B16E00819925 /* RightBarButtonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightBarButtonManager.swift; sourceTree = "<group>"; };
+		FD4840062BB1B19200819925 /* ChatsTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTableViewManager.swift; sourceTree = "<group>"; };
+		FD4840082BB1B1B200819925 /* ChatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTableViewCell.swift; sourceTree = "<group>"; };
+		FD48400F2BB1B5DB00819925 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		FD4840112BB1B6E100819925 /* ChatTableManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableManager.swift; sourceTree = "<group>"; };
+		FD4840132BB1B7D700819925 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +94,9 @@
 		FD0A30A92BADBD7800144F8E /* WA8_13 */ = {
 			isa = PBXGroup;
 			children = (
+				FD48400A2BB1B5A500819925 /* ChatScreen */,
+				FD483FFD2BB1B0F700819925 /* RegisterScreen */,
+				FD483FF62BB1B09200819925 /* DataModels */,
 				FD483FED2BADC1B800819925 /* MainScreen */,
 				FD0A30AA2BADBD7800144F8E /* AppDelegate.swift */,
 				FD0A30AC2BADBD7800144F8E /* SceneDelegate.swift */,
@@ -76,6 +105,7 @@
 				FD0A30B52BADBD7A00144F8E /* LaunchScreen.storyboard */,
 				FD0A30B82BADBD7A00144F8E /* Info.plist */,
 				FD0A30BE2BADBDFD00144F8E /* GoogleService-Info.plist */,
+				FD483FFB2BB1B0EA00819925 /* Configs.swift */,
 			);
 			path = WA8_13;
 			sourceTree = "<group>";
@@ -85,6 +115,8 @@
 			children = (
 				FD0A30AE2BADBD7800144F8E /* ViewController.swift */,
 				FD483FEE2BADC1BE00819925 /* Views */,
+				FD4840042BB1B16E00819925 /* RightBarButtonManager.swift */,
+				FD4840062BB1B19200819925 /* ChatsTableViewManager.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -93,6 +125,53 @@
 			isa = PBXGroup;
 			children = (
 				FD483FF22BADC1FE00819925 /* MainScreenView.swift */,
+				FD4840082BB1B1B200819925 /* ChatsTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FD483FF62BB1B09200819925 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				FD483FF42BB1B08D00819925 /* Chat.swift */,
+				FD483FF72BB1B0A600819925 /* Message.swift */,
+				FD483FF92BB1B0B300819925 /* User.swift */,
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
+		FD483FFD2BB1B0F700819925 /* RegisterScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FD48400C2BB1B5B500819925 /* Views */,
+				FD4840002BB1B12500819925 /* RegisterViewController.swift */,
+				FD4840022BB1B13B00819925 /* RegisterFirebaseManager.swift */,
+			);
+			path = RegisterScreen;
+			sourceTree = "<group>";
+		};
+		FD48400A2BB1B5A500819925 /* ChatScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FD48400B2BB1B5AE00819925 /* Views */,
+				FD4840132BB1B7D700819925 /* ChatViewController.swift */,
+			);
+			path = ChatScreen;
+			sourceTree = "<group>";
+		};
+		FD48400B2BB1B5AE00819925 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FD48400F2BB1B5DB00819925 /* ChatView.swift */,
+				FD4840112BB1B6E100819925 /* ChatTableManager.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FD48400C2BB1B5B500819925 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FD483FFE2BB1B11300819925 /* RegisterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -178,10 +257,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD4840052BB1B16E00819925 /* RightBarButtonManager.swift in Sources */,
+				FD483FFF2BB1B11300819925 /* RegisterView.swift in Sources */,
+				FD4840012BB1B12500819925 /* RegisterViewController.swift in Sources */,
 				FD0A30AF2BADBD7800144F8E /* ViewController.swift in Sources */,
+				FD4840122BB1B6E100819925 /* ChatTableManager.swift in Sources */,
+				FD4840032BB1B13B00819925 /* RegisterFirebaseManager.swift in Sources */,
+				FD483FFC2BB1B0EA00819925 /* Configs.swift in Sources */,
 				FD0A30AB2BADBD7800144F8E /* AppDelegate.swift in Sources */,
+				FD4840102BB1B5DB00819925 /* ChatView.swift in Sources */,
+				FD4840072BB1B19200819925 /* ChatsTableViewManager.swift in Sources */,
 				FD0A30AD2BADBD7800144F8E /* SceneDelegate.swift in Sources */,
+				FD4840142BB1B7D700819925 /* ChatViewController.swift in Sources */,
+				FD483FF82BB1B0A600819925 /* Message.swift in Sources */,
+				FD483FF52BB1B08D00819925 /* Chat.swift in Sources */,
 				FD483FF32BADC1FE00819925 /* MainScreenView.swift in Sources */,
+				FD483FFA2BB1B0B300819925 /* User.swift in Sources */,
+				FD4840092BB1B1B200819925 /* ChatsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,7 +351,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -316,7 +408,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
