@@ -7,6 +7,8 @@
 
 import Foundation
 import FirebaseAuth
+import FirebaseFirestoreSwift
+import FirebaseFirestore
 
 extension RegisterViewController{
     
@@ -19,7 +21,9 @@ extension RegisterViewController{
             Auth.auth().createUser(withEmail: email, password: password, completion: {result, error in
                 if error == nil{
                     //MARK: the user creation is successful...
+                    let user = User(id: email, name: name, email: email, chats: [Chat]())
                     self.setNameOfTheUserInFirebaseAuth(name: name)
+                    self.addUserToDatabase(user: user)
                 }else{
                     //MARK: there is a error creating the user...
                     print(error)
@@ -42,5 +46,20 @@ extension RegisterViewController{
             }
         })
     }
+    
+    //MARK: We set the name of the user after we create the account...
+    func addUserToDatabase(user: User){
+            let collectionUsers = database
+                .collection("users")
+            do{
+                try collectionUsers.addDocument(from: user, completion: {(error) in
+                    if error == nil{
+                        print("User added to db")
+                    }
+                })
+            }catch{
+                print("Error adding document!")
+            }
+        }
 }
 
