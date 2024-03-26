@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct Message: Codable{
@@ -14,8 +15,7 @@ struct Message: Codable{
     var text: String
     var timestamp: Int
     
-    init(id: String, user: User, text: String, timestamp: Int) {
-        self.id = id
+    init(user: User, text: String, timestamp: Int) {
         self.user = user
         self.text = text
         self.timestamp = timestamp

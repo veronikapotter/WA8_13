@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct Chat: Codable{
@@ -15,8 +16,7 @@ struct Chat: Codable{
     var last_msg_timestamp: Int
     var messages: [Message]
     
-    init(id: String, user: User, last_msg: String, last_msg_timestamp: Int, messages: [Message]) {
-        self.id = id
+    init(user: User, last_msg: String, last_msg_timestamp: Int, messages: [Message]) {
         self.user = user
         self.last_msg = last_msg
         self.last_msg_timestamp = last_msg_timestamp

@@ -21,7 +21,7 @@ extension RegisterViewController{
             Auth.auth().createUser(withEmail: email, password: password, completion: {result, error in
                 if error == nil{
                     //MARK: the user creation is successful...
-                    let user = User(id: email, name: name, email: email, chats: [Chat]())
+                    let user = User(name: name, email: email, chats: [Chat]())
                     self.setNameOfTheUserInFirebaseAuth(name: name)
                     self.addUserToDatabase(user: user)
                 }else{

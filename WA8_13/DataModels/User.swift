@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct User: Codable {
@@ -14,8 +15,7 @@ struct User: Codable {
     var email: String
     var chats: [Chat]
     
-    init(id: String, name: String, email: String, chats: [Chat]) {
-        self.id = id
+    init(name: String, email: String, chats: [Chat]) {
         self.name = name
         self.email = email
         self.chats = chats
