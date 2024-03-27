@@ -13,11 +13,9 @@ struct User: Codable {
     @DocumentID var id: String?
     var name: String
     var email: String
-    var chats: [Chat]
     
-    init(name: String, email: String, chats: [Chat]) {
+    init(name: String, email: String) {
         self.name = name
         self.email = email
-        self.chats = chats
     }
 }

@@ -18,6 +18,8 @@ class ChatView: UIView {
         self.backgroundColor = .white
         
         setupTableViewMessages()
+        setupButtonSend()
+        setupTextMessage()
         initConstraints()
     }
     
@@ -36,7 +38,7 @@ class ChatView: UIView {
         buttonSend = UIButton(type: .system)
         buttonSend.setImage(UIImage(systemName: "paperplane")?.withRenderingMode(.alwaysOriginal), for: .normal)
         buttonSend.translatesAutoresizingMaskIntoConstraints = false
-        bottomSendMessageView.addSubview(buttonSend)
+        self.addSubview(buttonSend)
     }
     
     func setupTextMessage() {
@@ -44,19 +46,7 @@ class ChatView: UIView {
         textMessage.placeholder = "Aa"
         textMessage.borderStyle = .roundedRect
         textMessage.translatesAutoresizingMaskIntoConstraints = false
-        bottomSendMessageView.addSubview(textMessage)
-    }
-    
-    func setupBottomSendMessageView(){
-        bottomSendMessageView = UIView()
-        bottomSendMessageView.backgroundColor = .white
-        bottomSendMessageView.layer.cornerRadius = 6
-        bottomSendMessageView.layer.shadowColor = UIColor.lightGray.cgColor
-        bottomSendMessageView.layer.shadowOffset = .zero
-        bottomSendMessageView.layer.shadowRadius = 4.0
-        bottomSendMessageView.layer.shadowOpacity = 0.7
-        bottomSendMessageView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(bottomSendMessageView)
+        self.addSubview(textMessage)
     }
     
     //MARK: setting up constraints...
@@ -67,16 +57,12 @@ class ChatView: UIView {
             tableViewMessages.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             tableViewMessages.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
-            bottomSendMessageView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor,constant: -8),
-            bottomSendMessageView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 8),
-            bottomSendMessageView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-            
-            buttonSend.bottomAnchor.constraint(equalTo: bottomSendMessageView.bottomAnchor, constant: -8),
+            buttonSend.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8),
             buttonSend.leadingAnchor.constraint(equalTo: textMessage.trailingAnchor, constant: 4),
-            buttonSend.trailingAnchor.constraint(equalTo: bottomSendMessageView.trailingAnchor, constant: -4),
+            buttonSend.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -4),
             
-            textMessage.bottomAnchor.constraint(equalTo: bottomSendMessageView.topAnchor, constant: -8),
-            textMessage.leadingAnchor.constraint(equalTo: bottomSendMessageView.leadingAnchor, constant: 4),
+            textMessage.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            textMessage.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 4),
             textMessage.trailingAnchor.constraint(equalTo: buttonSend.leadingAnchor, constant: -4),
             
         ])

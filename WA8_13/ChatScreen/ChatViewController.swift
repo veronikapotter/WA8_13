@@ -13,6 +13,7 @@ class ChatViewController: UIViewController {
     
     let chatScreen = ChatView()
     var currentChat: Chat!
+    var currentUser: FirebaseAuth.User!
     let database = Firestore.firestore()
     var messageList = [Message]()
     
@@ -21,7 +22,8 @@ class ChatViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        title = "\(currentChat.user)"
+        title = "\(currentChat.user.name)"
+        print(currentChat)
         
         super.viewDidLoad()
         
@@ -29,9 +31,9 @@ class ChatViewController: UIViewController {
         
         // MARK: add observer for when the chat updates
         self.database.collection("users")
-            .document((self.currentChat?.user.email)!)
+            .document((self.currentUser.email)!)
             .collection("chats")
-            .document((self.currentChat?.id)!)
+            .document((self.currentChat.id)!)
             .collection("messages")
             .addSnapshotListener(includeMetadataChanges: false, listener: {querySnapshot, error in
                 if let documents = querySnapshot?.documents{
@@ -52,5 +54,34 @@ class ChatViewController: UIViewController {
     
     // MARK: handle sending messge
     @objc func onButtonSendTapped(){
+        if let user = currentUser, let email = user.email, let name = user.displayName {
+            var text = chatScreen.textMessage.text
+            if let message = text {
+                let timestamp = NSDate().timeIntervalSince1970
+                let newMessage = Message(user: name, text: message, timestamp: timestamp)
+                let messages = database
+                    .collection("users")
+                    .document(email)
+                    .collection("chats")
+                    .document(self.currentChat.id!)
+                do{
+                    try messages.setData(from: newMessage, completion: {(error) in
+                        if error == nil{
+                            print("Message added to db")
+                            print(newMessage)
+                            print(email)
+                            print(self.currentChat.id!)
+                            print(self.currentChat)
+                        }
+                    })
+                }catch{
+                    print("Error adding document!")
+                }
+                    
+                    
+                }
+                
+            }
+    
     }
 }

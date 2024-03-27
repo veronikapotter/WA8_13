@@ -17,7 +17,6 @@ class ViewController: UIViewController {
     var currentUser:FirebaseAuth.User?
     let database = Firestore.firestore()
     let notificationCenter = NotificationCenter.default
-    
     let searchSheetController = SearchBottomSheetController()
     var searchSheetNavController: UINavigationController!
     
@@ -74,11 +73,32 @@ class ViewController: UIViewController {
     }
     
     // MARK: func to get the details of a particualr chat between two users
-    func getChatDetails(chat: Chat) {
-        // API request to users -> chats -> messages.
-        /*let chatViewController = ChatViewController()
-         chatViewController.currentChat = chat
-         navigationController?.pushViewController(chatViewController, animated: <#T##Bool#>)*/
+    func getChatDetails(currChat: Chat) {
+        if let user = currentUser {
+            if let email = user.email {
+                let docRef = database.collection("users")
+                    .document(email)
+                    .collection("chats")
+                    .document(currChat.user.email)
+                
+                docRef.getDocument(as: Chat.self) { result in
+                    switch result {
+                    case .success(let chat):
+                        // A Book value was successfully initialized from the DocumentSnapshot.
+                        //getChatDetails(chat: chat)
+                        print("HEY HEY \(chat.id)" )
+                        let chatViewController = ChatViewController()
+                        chatViewController.currentChat = chat
+                        chatViewController.currentUser = self.currentUser
+                        self.navigationController?.pushViewController(chatViewController, animated: true)
+                    case .failure(let error):
+                        // A Book value could not be initialized from the DocumentSnapshot.
+                        print("No chat exists. \(user.email)")
+                    }
+            }
+            
+            }
+        }
     }
     
     override func viewDidLoad() {

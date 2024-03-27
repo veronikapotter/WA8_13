@@ -11,11 +11,11 @@ import FirebaseFirestoreSwift
 
 struct Message: Codable{
     @DocumentID var id: String?
-    var user: User // user is the user that sent the message
+    var user: String
     var text: String
-    var timestamp: Int
+    var timestamp: Double
     
-    init(user: User, text: String, timestamp: Int) {
+    init(user: String, text: String, timestamp: Double) {
         self.user = user
         self.text = text
         self.timestamp = timestamp

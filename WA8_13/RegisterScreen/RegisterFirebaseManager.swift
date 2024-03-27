@@ -21,7 +21,7 @@ extension RegisterViewController{
             Auth.auth().createUser(withEmail: email, password: password, completion: {result, error in
                 if error == nil{
                     //MARK: the user creation is successful...
-                    let user = User(name: name, email: email, chats: [Chat]())
+                    let user = User(name: name, email: email)
                     self.setNameOfTheUserInFirebaseAuth(name: name)
                     self.addUserToDatabase(user: user)
                 }else{
@@ -49,12 +49,12 @@ extension RegisterViewController{
     
     //MARK: We set the name of the user after we create the account...
     func addUserToDatabase(user: User){
-            let collectionUsers = database
-                .collection("users")
+        // create doc reference
+        let collectionUsersDoc = database.collection("users").document(user.email.lowercased())
             do{
-                try collectionUsers.addDocument(from: user, completion: {(error) in
+                try collectionUsersDoc.setData(from: user, completion: {(error) in
                     if error == nil{
-                        print("User added to db")
+                        print("User added to db.")
                     }
                 })
             }catch{

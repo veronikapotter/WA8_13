@@ -14,12 +14,10 @@ struct Chat: Codable{
     var user: User
     var last_msg: String
     var last_msg_timestamp: Int
-    var messages: [Message]
     
-    init(user: User, last_msg: String, last_msg_timestamp: Int, messages: [Message]) {
+    init(user: User, last_msg: String, last_msg_timestamp: Int) {
         self.user = user
         self.last_msg = last_msg
         self.last_msg_timestamp = last_msg_timestamp
-        self.messages = messages
     }
 }

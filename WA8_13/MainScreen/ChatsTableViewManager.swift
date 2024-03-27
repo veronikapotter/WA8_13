@@ -23,6 +23,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        getChatDetails(chat: self.chatsList[indexPath.row])
+        getChatDetails(currChat: self.chatsList[indexPath.row])
     }
 }

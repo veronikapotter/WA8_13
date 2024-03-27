@@ -72,95 +72,44 @@ class SearchBottomSheetController: UIViewController {
     
     // MARK: either creates a new chat between two users or loads the existing chat
     func createChat(user: User) {
-        if let email = currentUser.email {
+        if let currUserEmail = currentUser.email {
             let docRef = database.collection("users")
-                .document(email)
+                .document(currUserEmail)
                 .collection("chats")
                 .document(user.email)
-              
-              docRef.getDocument(as: Chat.self) { result in
+            
+            docRef.getDocument(as: Chat.self) { result in
                 switch result {
                 case .success(let chat):
-                  // A Book value was successfully initialized from the DocumentSnapshot.
-                  //getChatDetails(chat: chat)
-                  print("HEY HEY")
+                    // A Book value was successfully initialized from the DocumentSnapshot.
+                    //getChatDetails(chat: chat)
+                    print("HEY HEY \(chat.id)" )
+                    let chatViewController = ChatViewController()
+                    chatViewController.currentChat = chat
+                    chatViewController.currentUser = self.currentUser
+                    self.navigationController?.popViewController(animated: true)
+                    self.navigationController?.pushViewController(chatViewController, animated: true)
                 case .failure(let error):
-                  // A Book value could not be initialized from the DocumentSnapshot.
-                  print("No chat exists.")
-                  var chat = Chat(user: user, last_msg: "", last_msg_timestamp: 0, messages: [Message]())
-                  let doc = self.database.collection("users")
-                        .document(email)
+                    // A Book value could not be initialized from the DocumentSnapshot.
+                    print("No chat exists. \(user.email)")
+                    var chat = Chat(user: user, last_msg: "", last_msg_timestamp: 0)
+                    let doc = self.database.collection("users")
+                        .document(currUserEmail) //TODO: this line is wrong here somehow. It is creating a new document with a new
                         .collection("chats").document(user.email)
-                  do{
-                      try doc.setData(from: chat, completion: {(error) in
-                        if error == nil{
-                            print("chat added to db")
-                        }
-                      })
-                  }catch{
-                    print("Error adding document!")
-                  }
-                }
-              }
-            
-            
-            /*
-            self.database.collection("users")
-                .document(email)
-                .collection("chats")
-            
-            
-            
-                .addSnapshotListener(includeMetadataChanges: false, listener: {querySnapshot, error in
-                    if let documents = querySnapshot?.documents{
-                        for document in documents{
-                            do{
-                                let chat  = try document.data(as: Chat.self)
-                                // MARK: exclude the current user from chatting with themselves.
-                                if user.email == chat.id {
-                                    //getChatDetails(chat: chat)
-                                }
-                            }catch{
-                                print(error)
+                    do{
+                        try doc.setData(from: chat, completion: {(error) in
+                            if error == nil{
+                                print("chat added to db")
+                                self.createChat(user: user)
                             }
-                        }
-                        
-                            var chat = Chat(id: email, user: user, last_msg: "", last_msg_timestamp: 0, messages: [Message]())
-                            let collectionChats = self.database.collection("users")
-                                .document(email)
-                                .collection("chats")
-                            do{
-                                try collectionChats.addDocument(from: chat, completion: {(error) in
-                                    if error == nil{
-                                        print("chat added to db")
-                                    }
-                                })
-                            }catch{
-                                print("Error adding document!")
-                            }
-                        
+                        })
+                    }catch{
+                        print("Error adding document!")
                     }
-                })*/
+                }
             }
         }
-    
-        
-            
-            
-            //.collection("chats").document(user.email)
-
-
-        
-        
-        
-        // API request to create a new chat if one does not exist.
-        
-        
-        // API request to users -> chats -> messages.
-        /*let chatViewController = ChatViewController()
-         chatViewController.currentChat = chat
-         navigationController?.pushViewController(chatViewController, animated: <#T##Bool#>)*/
-    
+        }
 }
 
 //MARK: adopting Table View protocols...
