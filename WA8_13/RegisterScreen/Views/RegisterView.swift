@@ -49,6 +49,8 @@ class RegisterView: UIView {
         textFieldPassword.isSecureTextEntry = true
         textFieldPassword.borderStyle = .roundedRect
         textFieldPassword.translatesAutoresizingMaskIntoConstraints = false
+        // to remove Strong password overlay
+        textFieldPassword.textContentType = .oneTimeCode
         self.addSubview(textFieldPassword)
     }
     

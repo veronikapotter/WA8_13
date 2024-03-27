@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class SearchBottomSheetController: UIViewController {
-
+    
     let searchSheet = SearchBottomSheetView()
     let database = Firestore.firestore()
     var currentUser: FirebaseAuth.User!
@@ -67,7 +67,7 @@ class SearchBottomSheetController: UIViewController {
                     
                     self.searchSheet.tableViewSearchResults.reloadData()
                 }
-        })
+            })
     }
     
     // MARK: either creates a new chat between two users or loads the existing chat
@@ -109,7 +109,7 @@ class SearchBottomSheetController: UIViewController {
                 }
             }
         }
-        }
+    }
 }
 
 //MARK: adopting Table View protocols...
@@ -129,7 +129,13 @@ extension SearchBottomSheetController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("click click")
         createChat(user: namesForTableView[indexPath.row])
+        //MARK: name selected....
+        //notificationCenter.post(name: .nameSelected, object: namesForTableView[indexPath.row])
+        
+        //MARK: dismiss the bottom search sheet...
+        self.dismiss(animated: true)
     }
+    
 }
 
 //MARK: adopting the search bar protocol...
