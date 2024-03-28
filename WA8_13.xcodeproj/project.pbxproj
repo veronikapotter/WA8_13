@@ -178,8 +178,9 @@
 		FD48400A2BB1B5A500819925 /* ChatScreen */ = {
 			isa = PBXGroup;
 			children = (
-				FD48400B2BB1B5AE00819925 /* Views */,
+				FD4840112BB1B6E100819925 /* ChatTableManager.swift */,
 				FD4840132BB1B7D700819925 /* ChatViewController.swift */,
+				FD48400B2BB1B5AE00819925 /* Views */,
 			);
 			path = ChatScreen;
 			sourceTree = "<group>";
@@ -188,7 +189,6 @@
 			isa = PBXGroup;
 			children = (
 				FD48400F2BB1B5DB00819925 /* ChatView.swift */,
-				FD4840112BB1B6E100819925 /* ChatTableManager.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

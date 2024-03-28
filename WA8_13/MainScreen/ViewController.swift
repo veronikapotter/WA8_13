@@ -65,7 +65,7 @@ class ViewController: UIViewController {
                                     print(error)
                                 }
                             }
-                            self.chatsList.sort(by: {$0.last_msg_timestamp < $1.last_msg_timestamp})
+                            self.chatsList.sort(by: {$0.last_msg_timestamp > $1.last_msg_timestamp})
                             self.mainScreen.tableViewChats.reloadData()
                         }
                 })
@@ -84,9 +84,9 @@ class ViewController: UIViewController {
         var chat = Chat(userNames: userNames, last_msg: "", last_msg_timestamp: timestamp)
         var chatID: String = ""
         if currentUser!.email! < user.email {
-            chatID = currentUser!.email!+user.email
+            chatID = (currentUser!.email!+user.email).lowercased()
         } else {
-            chatID = user.email+currentUser!.email!
+            chatID = (user.email+currentUser!.email!).lowercased()
         }
         
         database.collection("users").document(user.email.lowercased())
@@ -153,13 +153,13 @@ class ViewController: UIViewController {
                         if currChat.userNames[0] == user.displayName {
                             chatViewController.currentChatPartner = currChat.userNames[1]
                         } else {
-                            chatViewController.currentChatPartner = currChat.userNames[1]
+                            chatViewController.currentChatPartner = currChat.userNames[0]
                         }
                         
                         if currChat.userEmails[0] == user.email {
                             chatViewController.currentChatPartnerEmail = currChat.userEmails[1]
                         } else {
-                            chatViewController.currentChatPartnerEmail = currChat.userEmails[1]
+                            chatViewController.currentChatPartnerEmail = currChat.userEmails[0]
                         }
                         
                         chatViewController.currentUser = user

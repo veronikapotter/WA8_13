@@ -29,6 +29,11 @@ class ChatViewController: UIViewController {
         
         super.viewDidLoad()
         
+        chatScreen.tableViewMessages.delegate = self
+        chatScreen.tableViewMessages.dataSource = self
+        
+        chatScreen.tableViewMessages.separatorStyle = .none
+        
         chatScreen.buttonSend.addTarget(self, action: #selector(onButtonSendTapped), for: .touchUpInside)
         
         // MARK: add observer for when the chat updates. UPDATE TO LOOK IN THE CHAT LIST.
@@ -40,18 +45,19 @@ class ChatViewController: UIViewController {
                     self.messageList.removeAll()
                     print("messages, pre: \(self.messageList)")
                     for document in documents{
-                    do{
-                        print("checking doc")
-                        let message  = try document.data(as: Message.self)
-                        self.messageList.append(message)
-                        print(self.messageList)
+                        do{
+                            print("checking doc")
+                            let message  = try document.data(as: Message.self)
+                            self.messageList.append(message)
+                            print(self.messageList)
                         }catch{
                             print(error)
                         }
                     }
-                self.messageList.sort(by: {$0.timestamp > $1.timestamp})
-                self.chatScreen.tableViewMessages.reloadData()
-            }
+                    self.messageList.sort(by: {$0.timestamp < $1.timestamp})
+                    print(self.messageList.count)
+                    self.chatScreen.tableViewMessages.reloadData()
+                }
         })
     }
     
@@ -109,6 +115,9 @@ class ChatViewController: UIViewController {
                 }catch{
                     print("Error adding all documents!")
                 }
+                
+                // clear the message screen.
+                chatScreen.textMessage.text = ""
                 /*
                 
                 let messages = database

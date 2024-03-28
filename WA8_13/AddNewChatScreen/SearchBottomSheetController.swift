@@ -59,12 +59,12 @@ class SearchBottomSheetController: UIViewController {
                             print(error)
                         }
                     }
-                    // MARK: update the search tableView with the users
-                    self.userDatabase.sort(by: {$0.name < $1.name})
                     for user in self.userDatabase {
                         self.namesForTableView.append(user)
                     }
                     
+                    // MARK: update the search tableView with the users
+                    self.userDatabase.sort(by: {$0.name < $1.name})
                     self.searchSheet.tableViewSearchResults.reloadData()
                 }
         })

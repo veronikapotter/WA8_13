@@ -28,7 +28,7 @@ class MainScreenView: UIView {
     //MARK: initializing the UI elements...
     func setupProfilePic(){
         profilePic = UIImageView()
-        profilePic.image = UIImage(systemName: "person.circle")?.withRenderingMode(.alwaysOriginal)
+        profilePic.image = UIImage(systemName: "person.circle.fill")?.withRenderingMode(.alwaysOriginal)
         profilePic.contentMode = .scaleToFill
         profilePic.clipsToBounds = true
         profilePic.layer.masksToBounds = true
@@ -53,7 +53,7 @@ class MainScreenView: UIView {
     func setupFloatingButtonNewChat(){
         floatingButtonNewChat = UIButton(type: .system)
         floatingButtonNewChat.setTitle("", for: .normal)
-        floatingButtonNewChat.setImage(UIImage(systemName: "person.crop.circle.fill.badge.plus")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        floatingButtonNewChat.setImage(UIImage(systemName: "plus.circle")?.withRenderingMode(.alwaysOriginal), for: .normal)
         floatingButtonNewChat.contentHorizontalAlignment = .fill
         floatingButtonNewChat.contentVerticalAlignment = .fill
         floatingButtonNewChat.imageView?.contentMode = .scaleAspectFit
