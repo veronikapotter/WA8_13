@@ -189,9 +189,7 @@ class SearchBottomSheetController: UIViewController {
                 }
             }
         }
-        }
-        
-        
+    }
 }
 
 //MARK: adopting Table View protocols...
@@ -211,8 +209,13 @@ extension SearchBottomSheetController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
         print("click click")
         createChat(user: namesForTableView[indexPath.row])
-        //let h = try await handleChatClick(user: namesForTableView[indexPath.row])
+        //MARK: name selected....
+        //notificationCenter.post(name: .nameSelected, object: namesForTableView[indexPath.row])
+        
+        //MARK: dismiss the bottom search sheet...
+        self.dismiss(animated: true)
     }
+    
 }
 
 //MARK: adopting the search bar protocol...
