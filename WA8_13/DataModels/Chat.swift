@@ -11,12 +11,14 @@ import FirebaseFirestoreSwift
 
 struct Chat: Codable{
     @DocumentID var id: String?
-    var user: User
+    var userNames: [String]
+    var userEmails: [String]
     var last_msg: String
-    var last_msg_timestamp: Int
+    var last_msg_timestamp: Double
     
-    init(user: User, last_msg: String, last_msg_timestamp: Int) {
-        self.user = user
+    init(userNames: [String] = [], userEmails: [String] = [], last_msg: String = "Aa", last_msg_timestamp: Double = 0) {
+        self.userNames = userNames
+        self.userEmails = userEmails
         self.last_msg = last_msg
         self.last_msg_timestamp = last_msg_timestamp
     }

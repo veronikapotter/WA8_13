@@ -51,7 +51,7 @@ class ViewController: UIViewController {
                 
                 // MARK: handle updating the table view of last messages to various users
                 self.database.collection("users")
-                    .document((self.currentUser?.email)!)
+                    .document(self.currentUser!.email!)
                     .collection("chats")
                     .addSnapshotListener(includeMetadataChanges: false, listener: {querySnapshot, error in
                         if let documents = querySnapshot?.documents{
@@ -59,6 +59,7 @@ class ViewController: UIViewController {
                             for document in documents{
                                 do{
                                     let chat  = try document.data(as: Chat.self)
+                                    print(chat)
                                     self.chatsList.append(chat)
                                 }catch{
                                     print(error)
@@ -72,14 +73,73 @@ class ViewController: UIViewController {
         }
     }
     
+    
+    func createChat(user: User) {
+        // make chat doc in curr user
+        // make chat doc in user
+        // make chat doc in chats collection
+        let timestamp = NSDate().timeIntervalSince1970
+        let check = currentUser
+        let userNames = [user.name, currentUser!.displayName!]
+        var chat = Chat(userNames: userNames, last_msg: "", last_msg_timestamp: timestamp)
+        var chatID: String = ""
+        if currentUser!.email! < user.email {
+            chatID = currentUser!.email!+user.email
+        } else {
+            chatID = user.email+currentUser!.email!
+        }
+        
+        database.collection("users").document(user.email.lowercased())
+            do{
+                // add to current user
+                try database
+                    .collection("users")
+                    .document(currentUser!.email!.lowercased())
+                    .collection("chats")
+                    .document(chatID)
+                    .setData(["userNames": userNames], merge: true, completion: {(error) in
+                    if error == nil{
+                        print("User added to currUser db.")
+                    }
+                    })
+                
+                // add to chatting user
+                try database
+                    .collection("users")
+                    .document(user.email.lowercased())
+                    .collection("chats")
+                    .document(chatID)
+                    .setData(["userNames": userNames], merge: true, completion: {(error) in
+                    if error == nil{
+                        print("User added to chatting user db.")
+                    }
+                })
+                
+                // add to chat
+                try database
+                    .collection("chats")
+                    .document(chatID)
+                    .setData(["userNames": userNames], merge: true, completion: {(error) in
+                    if error == nil{
+                        print("User added to chat db.")
+                    }
+                })
+                
+                let chatScreenController = ChatViewController()
+                chatScreenController.currentChatID = chatID
+                chatScreenController.currentChatPartner = user.name
+                chatScreenController.currentUser = currentUser
+                navigationController?.pushViewController(chatScreenController, animated: true)
+            }catch{
+                print("Error adding all documents!")
+            }
+        }
     // MARK: func to get the details of a particualr chat between two users
     func getChatDetails(currChat: Chat) {
         if let user = currentUser {
             if let email = user.email {
-                let docRef = database.collection("users")
-                    .document(email)
-                    .collection("chats")
-                    .document(currChat.user.email)
+                let docRef = database.collection("chats")
+                    .document(currChat.id!)
                 
                 docRef.getDocument(as: Chat.self) { result in
                     switch result {
@@ -88,8 +148,21 @@ class ViewController: UIViewController {
                         //getChatDetails(chat: chat)
                         print("HEY HEY \(chat.id)" )
                         let chatViewController = ChatViewController()
-                        chatViewController.currentChat = chat
-                        chatViewController.currentUser = self.currentUser
+                        chatViewController.currentChatID = currChat.id
+                        
+                        if currChat.userNames[0] == user.displayName {
+                            chatViewController.currentChatPartner = currChat.userNames[1]
+                        } else {
+                            chatViewController.currentChatPartner = currChat.userNames[1]
+                        }
+                        
+                        if currChat.userEmails[0] == user.email {
+                            chatViewController.currentChatPartnerEmail = currChat.userEmails[1]
+                        } else {
+                            chatViewController.currentChatPartnerEmail = currChat.userEmails[1]
+                        }
+                        
+                        chatViewController.currentUser = user
                         self.navigationController?.pushViewController(chatViewController, animated: true)
                     case .failure(let error):
                         // A Book value could not be initialized from the DocumentSnapshot.
@@ -97,7 +170,7 @@ class ViewController: UIViewController {
                     }
             }
             
-            }
+        }
         }
     }
     

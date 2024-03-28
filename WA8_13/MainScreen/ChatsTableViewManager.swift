@@ -16,9 +16,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Configs.tableViewChatsID, for: indexPath) as! ChatsTableViewCell
-        cell.labelUser.text = chatsList[indexPath.row].user.name
+        if chatsList[indexPath.row].userNames[0] == currentUser?.displayName {
+            cell.labelUser.text = chatsList[indexPath.row].userNames[1]
+        } else {
+            cell.labelUser.text = chatsList[indexPath.row].userNames[0]
+        }
         cell.labelLastMessage.text = chatsList[indexPath.row].last_msg
-        cell.labelLastMsgTimestamp.text = "\(chatsList[indexPath.row].last_msg_timestamp)"
+        if chatsList[indexPath.row].last_msg_timestamp == 0 {
+            cell.labelLastMsgTimestamp.text = ""
+        } else {
+            cell.labelLastMsgTimestamp.text = "\(chatsList[indexPath.row].last_msg_timestamp)"
+        }
         return cell
     }
     

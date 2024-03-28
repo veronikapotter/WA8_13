@@ -70,46 +70,128 @@ class SearchBottomSheetController: UIViewController {
         })
     }
     
+    /*
     // MARK: either creates a new chat between two users or loads the existing chat
-    func createChat(user: User) {
-        if let currUserEmail = currentUser.email {
-            let docRef = database.collection("users")
-                .document(currUserEmail)
+    func handleChatClick(user: User) async {
+        // check if a chat exists
+            // where "users" contains user.name in chat doc collection contains
+        let chatDocs = database.collection("users")
+            .document(currentUser.email!)
+            .collection("chats")
+        
+        do {
+            let chatDocs = try await database
+                .collection("users")
+                .document(currentUser.email!.lowercased())
                 .collection("chats")
-                .document(user.email)
+                .whereField("users", arrayContains: user.email)
+                .getDocuments()
+          for document in chatDocs.documents {
+              print("\(document.documentID)")
+              do{
+                  let chat  = try document.data(as: Chat.self)
+                  getChatDetails(chat: chat)
+                  }catch{
+                      print(error)
+                  }
+              }
+          } catch {
+            print("Error getting documents: \(error)")
+            createChat(user: user)
+          
+        }
+        }
+
+    func getChatDetails(chat: Chat) {
+    }*/
+
+    func createChat(user: User) {
+        // make chat doc in curr user
+        // make chat doc in user
+        // make chat doc in chats collection
+        if let currUser = currentUser {
+            let timestamp = NSDate().timeIntervalSince1970
+            let userNames = [user.name, currentUser.displayName!]
+            let userEmails = [user.email, currentUser.email!]
+            var chat = Chat(userNames: userNames, userEmails: userEmails, last_msg: "", last_msg_timestamp: 0)
+            var chatID: String = ""
+            if currentUser.email! < user.email {
+                chatID = (currentUser.email!+user.email).lowercased()
+            } else {
+                chatID = (user.email+currentUser.email!).lowercased()
+            }
             
-            docRef.getDocument(as: Chat.self) { result in
-                switch result {
-                case .success(let chat):
-                    // A Book value was successfully initialized from the DocumentSnapshot.
-                    //getChatDetails(chat: chat)
-                    print("HEY HEY \(chat.id)" )
-                    let chatViewController = ChatViewController()
-                    chatViewController.currentChat = chat
-                    chatViewController.currentUser = self.currentUser
-                    self.navigationController?.popViewController(animated: true)
-                    self.navigationController?.pushViewController(chatViewController, animated: true)
-                case .failure(let error):
-                    // A Book value could not be initialized from the DocumentSnapshot.
-                    print("No chat exists. \(user.email)")
-                    var chat = Chat(user: user, last_msg: "", last_msg_timestamp: 0)
-                    let doc = self.database.collection("users")
-                        .document(currUserEmail) //TODO: this line is wrong here somehow. It is creating a new document with a new
-                        .collection("chats").document(user.email)
-                    do{
-                        try doc.setData(from: chat, completion: {(error) in
-                            if error == nil{
-                                print("chat added to db")
-                                self.createChat(user: user)
-                            }
-                        })
-                    }catch{
-                        print("Error adding document!")
+            if let email = currUser.email {
+                let docRef = database.collection("chats")
+                    .document(chatID)
+                
+                docRef.getDocument(as: Chat.self) { result in
+                    switch result {
+                    case .success(let chat):
+                        // A Book value was successfully initialized from the DocumentSnapshot.
+                        //getChatDetails(chat: chat)
+                        print("HEY HEY \(chat.id)" )
+                        let chatScreenController = ChatViewController()
+                        chatScreenController.currentChatID = chatID
+                        chatScreenController.currentChatPartner = user.name
+                        chatScreenController.currentUser = currUser
+                        chatScreenController.currentChatPartnerEmail = user.email
+                        self.navigationController?.pushViewController(chatScreenController, animated: true)
+                    case .failure(let error):
+                        // A Book value could not be initialized from the DocumentSnapshot.
+                        //self.database.collection("users").document(user.email.lowercased())
+                        do{
+                            // add to current user
+                            try self.database
+                                .collection("users")
+                                .document(currUser.email!.lowercased())
+                                .collection("chats")
+                                .document(chatID)
+                                .setData(from: chat, merge: true, completion: {(error) in
+                                    if error == nil{
+                                        print("User added to currUser db.")
+                                    }
+                                })
+                            
+                            // add to chatting user
+                            try self.database
+                                .collection("users")
+                                .document(user.email.lowercased())
+                                .collection("chats")
+                                .document(chatID)
+                                .setData(from: chat, merge: true, completion: {(error) in
+                                    if error == nil{
+                                        print("User added to chatting user db.")
+                                    }
+                                })
+                            
+                            // add to chat
+                            try self.database
+                                .collection("chats")
+                                .document(chatID)
+                                .setData(from: chat, merge: true, completion: {(error) in
+                                    if error == nil{
+                                        print("User added to chat db.")
+                                    }
+                                })
+                            
+                            let chatScreenController = ChatViewController()
+                            chatScreenController.currentChatID = chatID
+                            chatScreenController.currentChatPartner = user.name
+                            chatScreenController.currentUser = currUser
+                            chatScreenController.currentChatPartnerEmail = user.email
+                            self.navigationController?.pushViewController(chatScreenController, animated: true)
+                        }catch{
+                            print("Error adding all documents!")
+                        }
                     }
+                    //print("No chat exists. \(user.email)")
                 }
             }
         }
         }
+        
+        
 }
 
 //MARK: adopting Table View protocols...
@@ -126,9 +208,10 @@ extension SearchBottomSheetController: UITableViewDelegate, UITableViewDataSourc
     }
     
     // MARK: handle navigating to a new chat when the username is pressed.
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
         print("click click")
         createChat(user: namesForTableView[indexPath.row])
+        //let h = try await handleChatClick(user: namesForTableView[indexPath.row])
     }
 }
 
