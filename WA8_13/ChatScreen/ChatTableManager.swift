@@ -18,7 +18,13 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: Configs.tableViewMessagesID, for: indexPath) as! ChatsTableViewCell
         cell.labelUser.text = messageList[indexPath.row].user
         cell.labelLastMessage.text = messageList[indexPath.row].text
-        cell.labelLastMsgTimestamp.text = "\(messageList[indexPath.row].timestamp)"
+        
+        let date = Date(timeIntervalSince1970: messageList[indexPath.row].timestamp)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d 'at' h:mm a"
+        let dateString = formatter.string(from: date)
+        cell.labelLastMsgTimestamp.text = dateString
+        
         return cell
     }
 }

@@ -25,7 +25,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         if chatsList[indexPath.row].last_msg_timestamp == 0 {
             cell.labelLastMsgTimestamp.text = ""
         } else {
-            cell.labelLastMsgTimestamp.text = "\(chatsList[indexPath.row].last_msg_timestamp)"
+            let date = Date(timeIntervalSince1970: chatsList[indexPath.row].last_msg_timestamp)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMM d 'at' h:mm a"
+            let dateString = formatter.string(from: date)
+            cell.labelLastMsgTimestamp.text = dateString
         }
         return cell
     }
