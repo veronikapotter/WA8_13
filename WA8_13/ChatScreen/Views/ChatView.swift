@@ -8,6 +8,8 @@ import UIKit
 
 class ChatView: UIView {
     
+    // TODO: add scroll view
+    var contentWrapper: UIScrollView!
     var tableViewMessages: UITableView!
     var bottomSendMessageView: UIView!
     var textMessage: UITextField!
@@ -49,6 +51,8 @@ class ChatView: UIView {
         self.addSubview(textMessage)
     }
     
+    
+    
     //MARK: setting up constraints...
     func initConstraints(){
         NSLayoutConstraint.activate([
@@ -66,6 +70,7 @@ class ChatView: UIView {
             textMessage.trailingAnchor.constraint(equalTo: buttonSend.leadingAnchor, constant: -4),
             
         ])
+        
     }
-
+    
 }

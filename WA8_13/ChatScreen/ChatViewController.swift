@@ -21,13 +21,18 @@ class ChatViewController: UIViewController {
     
     override func loadView() {
         view = chatScreen
+        //self.scrollToBottom()
     }
-
+    
     override func viewDidLoad() {
         title = "\(currentChatPartner!)"
         print(currentChatID)
         
         super.viewDidLoad()
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardOnTap))
+        tapRecognizer.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapRecognizer)
         
         chatScreen.tableViewMessages.delegate = self
         chatScreen.tableViewMessages.dataSource = self
@@ -57,12 +62,39 @@ class ChatViewController: UIViewController {
                     self.messageList.sort(by: {$0.timestamp < $1.timestamp})
                     print(self.messageList.count)
                     self.chatScreen.tableViewMessages.reloadData()
+                    self.scrollToBottom()
+                    //self.scrollToBottom()
                 }
-        })
+            })
+        //scrollToBottom()
+        
+    }
+    
+    @objc func hideKeyboardOnTap(){
+        //MARK: removing the keyboard from screen...
+        view.endEditing(true)
+    }
+    
+    func scrollToBottom() {
+        let numberOfSections = chatScreen
+            .tableViewMessages
+            .numberOfSections
+        let numberOfRows = chatScreen
+            .tableViewMessages.numberOfRows(
+                inSection: numberOfSections - 1)
+        if numberOfRows > 0 {
+            let indexPath = IndexPath(
+                row: numberOfRows - 1,
+                section: numberOfSections - 1)
+            chatScreen.tableViewMessages
+                .scrollToRow(at: indexPath,
+                             at: .bottom, animated: true)
+        }
     }
     
     // MARK: handle sending messge
     @objc func onButtonSendTapped(){
+        //self.scrollToBottom()
         if let user = currentUser, let email = user.email, let name = user.displayName, let partnerEmail = currentChatPartnerEmail, let chatID = currentChatID {
             var text = chatScreen.textMessage.text
             if let message = text {
@@ -119,29 +151,29 @@ class ChatViewController: UIViewController {
                 // clear the message screen.
                 chatScreen.textMessage.text = ""
                 /*
+                 
+                 let messages = database
+                 .collection("users")
+                 .document(email)
+                 .collection("chats")
+                 .document(self.currentChatID!)
+                 do{
+                 try messages.setData(from: newMessage, completion: {(error) in
+                 if error == nil{
+                 print("Message added to db")
+                 print(newMessage)
+                 print(email)
+                 print(self.currentChatID!)
+                 }
+                 })
+                 }catch{
+                 print("Error adding document!")
+                 } */
                 
-                let messages = database
-                    .collection("users")
-                    .document(email)
-                    .collection("chats")
-                    .document(self.currentChatID!)
-                do{
-                    try messages.setData(from: newMessage, completion: {(error) in
-                        if error == nil{
-                            print("Message added to db")
-                            print(newMessage)
-                            print(email)
-                            print(self.currentChatID!)
-                        }
-                    })
-                }catch{
-                    print("Error adding document!")
-                } */
-                    
-                    
-                }
                 
             }
-    
+            
+        }
+        
     }
 }

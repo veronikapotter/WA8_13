@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ChatsTableViewCell: UITableViewCell {
     
@@ -13,6 +14,7 @@ class ChatsTableViewCell: UITableViewCell {
     var labelUser: UILabel!
     var labelLastMessage: UILabel!
     var labelLastMsgTimestamp: UILabel!
+    var currentUser: FirebaseAuth.User?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -87,19 +89,25 @@ class ChatsTableViewCell: UITableViewCell {
             labelLastMsgTimestamp.widthAnchor.constraint(lessThanOrEqualTo: labelUser.widthAnchor),
             
             wrapperCellView.heightAnchor.constraint(equalToConstant: 72)
+            
         ])
+        
+        
+        
     }
-
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
 }
 

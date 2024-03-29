@@ -28,6 +28,10 @@ class SearchBottomSheetController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardOnTap))
+        tapRecognizer.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapRecognizer)
+        
         //MARK: setting up Table View data source and delegate...
         searchSheet.tableViewSearchResults.delegate = self
         searchSheet.tableViewSearchResults.dataSource = self
@@ -36,6 +40,11 @@ class SearchBottomSheetController: UIViewController {
         searchSheet.searchBar.delegate = self
         
         getallusers()
+    }
+    
+    @objc func hideKeyboardOnTap(){
+        //MARK: removing the keyboard from screen...
+        view.endEditing(true)
     }
     
     // MARK: request to firebase "users" collection to get all the users to chat with

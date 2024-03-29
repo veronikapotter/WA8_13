@@ -25,7 +25,24 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource{
         let dateString = formatter.string(from: date)
         cell.labelLastMsgTimestamp.text = dateString
         
+        
+        if cell.labelUser.text == currentUser?.displayName {
+            cell.labelUser.textAlignment = .natural
+            cell.labelLastMessage.textAlignment = .natural
+            cell.labelLastMsgTimestamp.textAlignment = .natural
+            cell.labelUser.textAlignment = .right
+            cell.labelUser.textColor = .white
+            cell.labelLastMessage.textAlignment = .right
+            cell.labelLastMessage.textColor = .white
+            cell.labelLastMsgTimestamp.textAlignment = .right
+            cell.labelLastMsgTimestamp.textColor = .white
+            cell.wrapperCellView.backgroundColor = UIColor.systemBlue
+        } else {
+            cell.wrapperCellView.backgroundColor = UIColor.systemGray6
+        }
+        
         return cell
     }
+    
 }
 

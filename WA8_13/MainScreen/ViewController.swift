@@ -74,6 +74,7 @@ class ViewController: UIViewController {
     }
     
     
+    
     func createChat(user: User) {
         // make chat doc in curr user
         // make chat doc in user
@@ -194,6 +195,17 @@ class ViewController: UIViewController {
         
         observeNameSelected()
         
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardOnTap))
+        tapRecognizer.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapRecognizer)
+        
+    }
+    
+    
+    
+    @objc func hideKeyboardOnTap(){
+        //MARK: removing the keyboard from screen...
+        view.endEditing(true)
     }
     
     func observeNameSelected(){
