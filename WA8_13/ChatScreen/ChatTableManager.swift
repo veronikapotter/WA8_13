@@ -33,6 +33,9 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource{
             cell.wrapperCellView.backgroundColor = UIColor.systemBlue
         } else {
             cell.wrapperCellView.backgroundColor = UIColor.systemGray6
+            cell.labelUser.textColor = .black
+            cell.labelLastMessage.textColor = .black
+            cell.labelLastMsgTimestamp.textColor = .black
         }
         
         return cell
