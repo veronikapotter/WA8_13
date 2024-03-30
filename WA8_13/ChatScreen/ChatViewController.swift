@@ -29,6 +29,7 @@ class ChatViewController: UIViewController {
         print(currentChatID)
         
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardOnTap))
         tapRecognizer.cancelsTouchesInView = false
@@ -68,6 +69,13 @@ class ChatViewController: UIViewController {
             })
         //scrollToBottom()
         
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            chatScreen.adjustForKeyboard(height: keyboardHeight)
+        }
     }
     
     @objc func hideKeyboardOnTap(){

@@ -14,6 +14,8 @@ class ChatView: UIView {
     var bottomSendMessageView: UIView!
     var textMessage: UITextField!
     var buttonSend: UIButton!
+    var textMessageBottomConstraint: NSLayoutConstraint?
+    var buttonSendBottomConstraint: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,7 +47,7 @@ class ChatView: UIView {
     
     func setupTextMessage() {
         textMessage = UITextField()
-        textMessage.placeholder = "Aa"
+        textMessage.placeholder = "Text Message"
         textMessage.borderStyle = .roundedRect
         textMessage.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(textMessage)
@@ -55,22 +57,34 @@ class ChatView: UIView {
     
     //MARK: setting up constraints...
     func initConstraints(){
+        textMessageBottomConstraint = textMessage.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8)
+        buttonSendBottomConstraint = buttonSend.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8)
+        
+        
         NSLayoutConstraint.activate([
             tableViewMessages.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 32),
             tableViewMessages.bottomAnchor.constraint(equalTo: buttonSend.topAnchor, constant: -32),
             tableViewMessages.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             tableViewMessages.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
+            buttonSendBottomConstraint!,
             buttonSend.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8),
             buttonSend.leadingAnchor.constraint(equalTo: textMessage.trailingAnchor, constant: 4),
             buttonSend.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -4),
             
-            textMessage.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            textMessageBottomConstraint!,
             textMessage.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 4),
             textMessage.trailingAnchor.constraint(equalTo: buttonSend.leadingAnchor, constant: -4),
             
         ])
         
     }
+    
+    func adjustForKeyboard(height: CGFloat) {
+        textMessageBottomConstraint?.constant = -height + 35 // Adjust the constant as needed
+        buttonSendBottomConstraint?.constant = -height + 35
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
+        } }
     
 }
