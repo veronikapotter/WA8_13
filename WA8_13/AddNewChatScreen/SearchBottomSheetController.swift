@@ -87,14 +87,11 @@ class SearchBottomSheetController: UIViewController {
         if let currUser = currentUser {
             let timestamp = NSDate().timeIntervalSince1970
             let userNames = [user.name, currentUser.displayName!]
-            let userEmails = [user.email, currentUser.email!]
+            // sort the user emails to make the chatID
+            var userEmails = [user.email.lowercased(), currentUser.email!.lowercased()]
+            userEmails.sort(by: <)
             var chat = Chat(userNames: userNames, userEmails: userEmails, last_msg: "", last_msg_timestamp: 0)
-            var chatID: String = ""
-            if currentUser.email! < user.email {
-                chatID = (currentUser.email!+user.email).lowercased()
-            } else {
-                chatID = (user.email+currentUser.email!).lowercased()
-            }
+            var chatID = (userEmails[0]+userEmails[1]).lowercased()
             
             if let email = currUser.email {
                 let docRef = database.collection("chats")

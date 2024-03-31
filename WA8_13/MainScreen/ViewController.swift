@@ -72,68 +72,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
-    
-    func createChat(user: User) {
-        // make chat doc in curr user
-        // make chat doc in user
-        // make chat doc in chats collection
-        let timestamp = NSDate().timeIntervalSince1970
-        let check = currentUser
-        let userNames = [user.name, currentUser!.displayName!]
-        var chat = Chat(userNames: userNames, last_msg: "", last_msg_timestamp: timestamp)
-        var chatID: String = ""
-        if currentUser!.email! < user.email {
-            chatID = (currentUser!.email!+user.email).lowercased()
-        } else {
-            chatID = (user.email+currentUser!.email!).lowercased()
-        }
-        
-        database.collection("users").document(user.email.lowercased())
-        do{
-            // add to current user
-            try database
-                .collection("users")
-                .document(currentUser!.email!.lowercased())
-                .collection("chats")
-                .document(chatID)
-                .setData(["userNames": userNames], merge: true, completion: {(error) in
-                    if error == nil{
-                        print("User added to currUser db.")
-                    }
-                })
-            
-            // add to chatting user
-            try database
-                .collection("users")
-                .document(user.email.lowercased())
-                .collection("chats")
-                .document(chatID)
-                .setData(["userNames": userNames], merge: true, completion: {(error) in
-                    if error == nil{
-                        print("User added to chatting user db.")
-                    }
-                })
-            
-            // add to chat
-            try database
-                .collection("chats")
-                .document(chatID)
-                .setData(["userNames": userNames], merge: true, completion: {(error) in
-                    if error == nil{
-                        print("User added to chat db.")
-                    }
-                })
-            
-            let chatScreenController = ChatViewController()
-            chatScreenController.currentChatID = chatID
-            chatScreenController.currentChatPartner = user.name
-            chatScreenController.currentUser = currentUser
-            navigationController?.pushViewController(chatScreenController, animated: true)
-        }catch{
-            print("Error adding all documents!")
-        }
-    }
     // MARK: func to get the details of a particualr chat between two users
     func getChatDetails(currChat: Chat) {
         if let user = currentUser {
