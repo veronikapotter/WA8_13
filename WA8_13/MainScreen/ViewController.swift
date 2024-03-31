@@ -215,6 +215,7 @@ class ViewController: UIViewController {
         // MARK: setting up modal style...
         searchSheetNavController.modalPresentationStyle = .pageSheet
         searchSheetController.currentUser = currentUser //pass the email of the currect user
+        searchSheetController.mainNavController = self.navigationController
         
         if let bottomSearchSheet = searchSheetNavController.sheetPresentationController{
             bottomSearchSheet.detents = [.medium(), .large()]

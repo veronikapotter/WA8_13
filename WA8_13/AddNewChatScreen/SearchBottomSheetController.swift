@@ -14,6 +14,7 @@ class SearchBottomSheetController: UIViewController {
     let searchSheet = SearchBottomSheetView()
     let database = Firestore.firestore()
     var currentUser: FirebaseAuth.User!
+    var mainNavController: UINavigationController! = nil
     
     //MARK: the list of users
     var userDatabase = [User]()
@@ -107,7 +108,7 @@ class SearchBottomSheetController: UIViewController {
                         chatScreenController.currentChatPartner = user.name
                         chatScreenController.currentUser = currUser
                         chatScreenController.currentChatPartnerEmail = user.email
-                        self.navigationController?.pushViewController(chatScreenController, animated: true)
+                        self.mainNavController.pushViewController(chatScreenController, animated: true)
                     case .failure(let error):
                         do{
                             // add to current user
@@ -143,13 +144,12 @@ class SearchBottomSheetController: UIViewController {
                                         print("User added to chat db.")
                                     }
                                 })
-                            
                             let chatScreenController = ChatViewController()
                             chatScreenController.currentChatID = chatID
                             chatScreenController.currentChatPartner = user.name
                             chatScreenController.currentUser = currUser
                             chatScreenController.currentChatPartnerEmail = user.email
-                            self.navigationController?.pushViewController(chatScreenController, animated: true)
+                            self.mainNavController.pushViewController(chatScreenController, animated: true)
                         }catch{
                             print("Error adding all documents!")
                         }
@@ -175,9 +175,9 @@ extension SearchBottomSheetController: UITableViewDelegate, UITableViewDataSourc
     
     // MARK: handle navigating to a new chat when the username is pressed.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
-        createChat(user: namesForTableView[indexPath.row])
-        
         self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
+        createChat(user: namesForTableView[indexPath.row])
     }
     
 }

@@ -102,6 +102,7 @@ extension ViewController{
             )
         })
     }
+    
     @objc func onTapOutsideAlert(){
         self.dismiss(animated: true)
     }
