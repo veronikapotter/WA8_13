@@ -95,7 +95,7 @@ class ChatView: UIView {
     
     // source: Gagana
     func adjustForKeyboard(height: CGFloat) {
-        textMessageBottomConstraint?.constant = -height + 25
+        textMessageBottomConstraint?.constant = -height + 25 
         buttonSendBottomConstraint?.constant = -height + 25
         UIView.animate(withDuration: 0.3) {
             self.layoutIfNeeded()
