@@ -17,7 +17,7 @@ extension RegisterViewController{
         if let name = registerView.textFieldName.text,
            let email = registerView.textFieldEmail.text,
            let password = registerView.textFieldPassword.text{
-            //Validations....
+
             Auth.auth().createUser(withEmail: email, password: password, completion: {result, error in
                 if error == nil{
                     //MARK: the user creation is successful...
@@ -51,15 +51,15 @@ extension RegisterViewController{
     func addUserToDatabase(user: User){
         // create doc reference
         let collectionUsersDoc = database.collection("users").document(user.email.lowercased())
-            do{
-                try collectionUsersDoc.setData(from: user, completion: {(error) in
-                    if error == nil{
-                        print("User added to db.")
-                    }
-                })
-            }catch{
-                print("Error adding document!")
-            }
+        do{
+            try collectionUsersDoc.setData(from: user, completion: {(error) in
+                if error == nil{
+                    print("User added to db.")
+                }
+            })
+        }catch{
+            print("Error adding document!")
         }
+    }
 }
 

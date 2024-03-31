@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class RegisterViewController: UIViewController {
-
+    
     let registerView = RegisterView()
     let database = Firestore.firestore()
     

@@ -21,12 +21,10 @@ class ChatViewController: UIViewController {
     
     override func loadView() {
         view = chatScreen
-        //self.scrollToBottom()
     }
     
     override func viewDidLoad() {
         title = "\(currentChatPartner!)"
-        print(currentChatID)
         
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -49,25 +47,19 @@ class ChatViewController: UIViewController {
             .addSnapshotListener(includeMetadataChanges: false, listener: {querySnapshot, error in
                 if let documents = querySnapshot?.documents{
                     self.messageList.removeAll()
-                    print("messages, pre: \(self.messageList)")
                     for document in documents{
                         do{
-                            print("checking doc")
                             let message  = try document.data(as: Message.self)
                             self.messageList.append(message)
-                            print(self.messageList)
                         }catch{
                             print(error)
                         }
                     }
                     self.messageList.sort(by: {$0.timestamp < $1.timestamp})
-                    print(self.messageList.count)
                     self.chatScreen.tableViewMessages.reloadData()
                     self.scrollToBottom()
-                    //self.scrollToBottom()
                 }
             })
-        //scrollToBottom()
         
     }
     
@@ -102,7 +94,6 @@ class ChatViewController: UIViewController {
     
     // MARK: handle sending messge
     @objc func onButtonSendTapped(){
-        //self.scrollToBottom()
         if let user = currentUser, let email = user.email, let name = user.displayName, let partnerEmail = currentChatPartnerEmail, let chatID = currentChatID {
             var text = chatScreen.textMessage.text
             if let message = text {
@@ -156,29 +147,7 @@ class ChatViewController: UIViewController {
                     print("Error adding all documents!")
                 }
                 
-                // clear the message screen.
                 chatScreen.textMessage.text = ""
-                /*
-                 
-                 let messages = database
-                 .collection("users")
-                 .document(email)
-                 .collection("chats")
-                 .document(self.currentChatID!)
-                 do{
-                 try messages.setData(from: newMessage, completion: {(error) in
-                 if error == nil{
-                 print("Message added to db")
-                 print(newMessage)
-                 print(email)
-                 print(self.currentChatID!)
-                 }
-                 })
-                 }catch{
-                 print("Error adding document!")
-                 } */
-                
-                
             }
             
         }

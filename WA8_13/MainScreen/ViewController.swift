@@ -59,7 +59,6 @@ class ViewController: UIViewController {
                             for document in documents{
                                 do{
                                     let chat  = try document.data(as: Chat.self)
-                                    print(chat)
                                     self.chatsList.append(chat)
                                 }catch{
                                     print(error)
@@ -68,7 +67,7 @@ class ViewController: UIViewController {
                             self.chatsList.sort(by: {$0.last_msg_timestamp > $1.last_msg_timestamp})
                             self.mainScreen.tableViewChats.reloadData()
                         }
-                })
+                    })
             }
         }
     }
@@ -91,50 +90,50 @@ class ViewController: UIViewController {
         }
         
         database.collection("users").document(user.email.lowercased())
-            do{
-                // add to current user
-                try database
-                    .collection("users")
-                    .document(currentUser!.email!.lowercased())
-                    .collection("chats")
-                    .document(chatID)
-                    .setData(["userNames": userNames], merge: true, completion: {(error) in
+        do{
+            // add to current user
+            try database
+                .collection("users")
+                .document(currentUser!.email!.lowercased())
+                .collection("chats")
+                .document(chatID)
+                .setData(["userNames": userNames], merge: true, completion: {(error) in
                     if error == nil{
                         print("User added to currUser db.")
                     }
-                    })
-                
-                // add to chatting user
-                try database
-                    .collection("users")
-                    .document(user.email.lowercased())
-                    .collection("chats")
-                    .document(chatID)
-                    .setData(["userNames": userNames], merge: true, completion: {(error) in
+                })
+            
+            // add to chatting user
+            try database
+                .collection("users")
+                .document(user.email.lowercased())
+                .collection("chats")
+                .document(chatID)
+                .setData(["userNames": userNames], merge: true, completion: {(error) in
                     if error == nil{
                         print("User added to chatting user db.")
                     }
                 })
-                
-                // add to chat
-                try database
-                    .collection("chats")
-                    .document(chatID)
-                    .setData(["userNames": userNames], merge: true, completion: {(error) in
+            
+            // add to chat
+            try database
+                .collection("chats")
+                .document(chatID)
+                .setData(["userNames": userNames], merge: true, completion: {(error) in
                     if error == nil{
                         print("User added to chat db.")
                     }
                 })
-                
-                let chatScreenController = ChatViewController()
-                chatScreenController.currentChatID = chatID
-                chatScreenController.currentChatPartner = user.name
-                chatScreenController.currentUser = currentUser
-                navigationController?.pushViewController(chatScreenController, animated: true)
-            }catch{
-                print("Error adding all documents!")
-            }
+            
+            let chatScreenController = ChatViewController()
+            chatScreenController.currentChatID = chatID
+            chatScreenController.currentChatPartner = user.name
+            chatScreenController.currentUser = currentUser
+            navigationController?.pushViewController(chatScreenController, animated: true)
+        }catch{
+            print("Error adding all documents!")
         }
+    }
     // MARK: func to get the details of a particualr chat between two users
     func getChatDetails(currChat: Chat) {
         if let user = currentUser {
@@ -145,9 +144,6 @@ class ViewController: UIViewController {
                 docRef.getDocument(as: Chat.self) { result in
                     switch result {
                     case .success(let chat):
-                        // A Book value was successfully initialized from the DocumentSnapshot.
-                        //getChatDetails(chat: chat)
-                        print("HEY HEY \(chat.id)" )
                         let chatViewController = ChatViewController()
                         chatViewController.currentChatID = currChat.id
                         
@@ -166,12 +162,11 @@ class ViewController: UIViewController {
                         chatViewController.currentUser = user
                         self.navigationController?.pushViewController(chatViewController, animated: true)
                     case .failure(let error):
-                        // A Book value could not be initialized from the DocumentSnapshot.
                         print("No chat exists. \(user.email)")
                     }
+                }
+                
             }
-            
-        }
         }
     }
     
@@ -192,8 +187,7 @@ class ViewController: UIViewController {
         view.bringSubviewToFront(mainScreen.floatingButtonNewChat)
         
         mainScreen.floatingButtonNewChat.addTarget(self, action: #selector(onNewChatButtonTapped), for: .touchUpInside)
-        
-        observeNameSelected()
+
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardOnTap))
         tapRecognizer.cancelsTouchesInView = false
@@ -208,20 +202,6 @@ class ViewController: UIViewController {
         view.endEditing(true)
     }
     
-    func observeNameSelected(){
-        // MARK: fix this
-//        notificationCenter.addObserver(
-//            self,
-//            selector: #selector(onNameSelected(notification:)),
-//            name: .nameSelected, object: nil)
-    }
-    @objc func onNameSelected(notification: Notification){
-        if let selectedName = notification.object{
-            // MARK: do something here idk what yet
-            //mainScreen.labelName.text = selectedName as! String
-        }
-    }
-    
     @objc func onNewChatButtonTapped(){
         setupSearchBottomSheet()
         present(searchSheetNavController, animated: true)
@@ -234,7 +214,7 @@ class ViewController: UIViewController {
         
         // MARK: setting up modal style...
         searchSheetNavController.modalPresentationStyle = .pageSheet
-        searchSheetController.currentUser = currentUser //pass the email of the currect user 
+        searchSheetController.currentUser = currentUser //pass the email of the currect user
         
         if let bottomSearchSheet = searchSheetNavController.sheetPresentationController{
             bottomSearchSheet.detents = [.medium(), .large()]

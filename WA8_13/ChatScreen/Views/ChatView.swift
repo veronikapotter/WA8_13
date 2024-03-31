@@ -8,7 +8,6 @@ import UIKit
 
 class ChatView: UIView {
     
-    // TODO: add scroll view
     var contentWrapper: UIScrollView!
     var tableViewMessages: UITableView!
     var bottomSendMessageView: UIView!
@@ -95,7 +94,7 @@ class ChatView: UIView {
     
     // source: Gagana
     func adjustForKeyboard(height: CGFloat) {
-        textMessageBottomConstraint?.constant = -height + 25 
+        textMessageBottomConstraint?.constant = -height + 25
         buttonSendBottomConstraint?.constant = -height + 25
         UIView.animate(withDuration: 0.3) {
             self.layoutIfNeeded()

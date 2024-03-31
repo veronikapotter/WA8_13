@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class SearchBottomSheetController: UIViewController {
-
+    
     let searchSheet = SearchBottomSheetView()
     let database = Firestore.firestore()
     var currentUser: FirebaseAuth.User!
@@ -76,44 +76,9 @@ class SearchBottomSheetController: UIViewController {
                     self.userDatabase.sort(by: {$0.name < $1.name})
                     self.searchSheet.tableViewSearchResults.reloadData()
                 }
-        })
+            })
     }
     
-    /*
-    // MARK: either creates a new chat between two users or loads the existing chat
-    func handleChatClick(user: User) async {
-        // check if a chat exists
-            // where "users" contains user.name in chat doc collection contains
-        let chatDocs = database.collection("users")
-            .document(currentUser.email!)
-            .collection("chats")
-        
-        do {
-            let chatDocs = try await database
-                .collection("users")
-                .document(currentUser.email!.lowercased())
-                .collection("chats")
-                .whereField("users", arrayContains: user.email)
-                .getDocuments()
-          for document in chatDocs.documents {
-              print("\(document.documentID)")
-              do{
-                  let chat  = try document.data(as: Chat.self)
-                  getChatDetails(chat: chat)
-                  }catch{
-                      print(error)
-                  }
-              }
-          } catch {
-            print("Error getting documents: \(error)")
-            createChat(user: user)
-          
-        }
-        }
-
-    func getChatDetails(chat: Chat) {
-    }*/
-
     func createChat(user: User) {
         // make chat doc in curr user
         // make chat doc in user
@@ -137,9 +102,6 @@ class SearchBottomSheetController: UIViewController {
                 docRef.getDocument(as: Chat.self) { result in
                     switch result {
                     case .success(let chat):
-                        // A Book value was successfully initialized from the DocumentSnapshot.
-                        //getChatDetails(chat: chat)
-                        print("HEY HEY \(chat.id)" )
                         let chatScreenController = ChatViewController()
                         chatScreenController.currentChatID = chatID
                         chatScreenController.currentChatPartner = user.name
@@ -147,8 +109,6 @@ class SearchBottomSheetController: UIViewController {
                         chatScreenController.currentChatPartnerEmail = user.email
                         self.navigationController?.pushViewController(chatScreenController, animated: true)
                     case .failure(let error):
-                        // A Book value could not be initialized from the DocumentSnapshot.
-                        //self.database.collection("users").document(user.email.lowercased())
                         do{
                             // add to current user
                             try self.database
@@ -194,7 +154,6 @@ class SearchBottomSheetController: UIViewController {
                             print("Error adding all documents!")
                         }
                     }
-                    //print("No chat exists. \(user.email)")
                 }
             }
         }
@@ -216,12 +175,8 @@ extension SearchBottomSheetController: UITableViewDelegate, UITableViewDataSourc
     
     // MARK: handle navigating to a new chat when the username is pressed.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
-        print("click click")
         createChat(user: namesForTableView[indexPath.row])
-        //MARK: name selected....
-        //notificationCenter.post(name: .nameSelected, object: namesForTableView[indexPath.row])
         
-        //MARK: dismiss the bottom search sheet...
         self.dismiss(animated: true)
     }
     
